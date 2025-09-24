@@ -1,0 +1,245 @@
+model:
+  name: "smollm:1.7b"
+  display_name: "SmolLM 1.7B - Advanced Reasoning"
+  description: "Most capable model in the suite, optimized for complex reasoning and detailed analysis"
+  parameters: "1.7B"
+  size: "991MB"
+  context_window: 8192
+  max_tokens: 2048
+  
+  # Generation settings
+  default_temperature: 0.7
+  default_top_p: 0.9
+  default_top_k: 40
+  
+  # Performance characteristics
+  strengths:
+    - "Strong reasoning capabilities"
+    - "Good context understanding"
+    - "Detailed analysis abilities"
+    - "Complex problem solving"
+    - "Advanced code generation"
+    - "Nuanced explanations"
+  
+  weaknesses:
+    - "Slower response times (~1.2s)"
+    - "Higher memory usage (4GB RAM)"
+    - "May be overkill for simple tasks"
+    - "Still limited compared to larger models"
+  
+  # Optimal use cases
+  use_cases:
+    - "Complex problem solving"
+    - "Detailed analysis and research"
+    - "Advanced code generation"
+    - "Strategic planning"
+    - "Technical writing"
+    - "Multi-step reasoning"
+    - "Educational content creation"
+    - "Creative projects"
+
+prompts:
+  system: |
+    You are an advanced AI assistant with strong reasoning and analytical capabilities.
+    You excel at complex problem-solving, detailed analysis, and multi-step reasoning.
+    Provide comprehensive, well-structured responses that demonstrate deep thinking.
+    Break down complex problems systematically and explain your reasoning process.
+    You can handle sophisticated tasks that require careful consideration and planning.
+  
+  optimization_rules:
+    - "Think step by step through complex problems"
+    - "Provide detailed explanations with reasoning"
+    - "Use structured approaches (frameworks, methodologies)"
+    - "Consider multiple perspectives and alternatives"
+    - "Include relevant examples and case studies"
+    - "Anticipate follow-up questions"
+  
+  max_prompt_length: 800
+  recommended_prompt_style: "comprehensive_and_analytical"
+
+performance:
+  timeout: 60  # seconds
+  retry_attempts: 2
+  cache_enabled: true
+  cache_ttl: 900  # 15 minutes
+  
+  # Resource limits
+  max_concurrent_requests: 3
+  memory_limit: "4GB"
+  
+  # Quality settings
+  min_response_length: 50
+  max_response_length: 2500
+  
+agent_config:
+  # Which agent roles this model is suitable for
+  suitable_roles:
+    - "strategic_planner"
+    - "senior_analyst"
+    - "technical_architect"
+    - "research_specialist"
+    - "complex_problem_solver"
+    - "advanced_code_generator"
+    - "content_strategist"
+  
+  # Agent-specific settings
+  planning_capability: "advanced"
+  reasoning_capability: "strong"
+  creativity_level: "high"
+  factual_accuracy: "very_good"
+  
+  # Task routing - this is the most capable model in the suite
+  auto_route_from_smaller_models:
+    - "complex_reasoning_required"
+    - "multi_step_analysis"
+    - "strategic_planning"
+    - "advanced_code_generation"
+    - "detailed_research"
+    - "technical_architecture"
+  
+  # Only route to external services for specialized domains
+  route_to_external:
+    - "real_time_data_required"
+    - "specialized_scientific_calculations"
+    - "current_events_analysis"
+
+monitoring:
+  # Performance metrics to track
+  track_metrics:
+    - "response_time"
+    - "token_throughput"
+    - "memory_usage"
+    - "success_rate"
+    - "user_satisfaction"
+    - "task_completion_rate"
+    - "reasoning_quality_score"
+  
+  # Alerts
+  alert_thresholds:
+    response_time_ms: 2000
+    memory_usage_mb: 5000
+    error_rate_percent: 2
+
+examples:
+  # Example prompts that work well with this model
+  excellent_prompts:
+    - "Design a scalable microservices architecture for an e-commerce platform"
+    - "Analyze the economic implications of remote work on urban development"
+    - "Create a comprehensive learning plan for machine learning fundamentals"
+    - "Debug this complex algorithm and suggest optimizations"
+    - "Develop a strategic plan for entering a new market"
+    - "Write a technical specification for a distributed system"
+  
+  # Still challenging even for this model
+  challenging_prompts:
+    - "Solve this advanced mathematical theorem with formal proof"
+    - "Predict stock market movements for the next quarter"
+    - "Design a quantum computing algorithm"
+    - "Analyze real-time global economic data"
+
+specializations:
+  # Areas where this model excels
+  expert_areas:
+    - "Strategic planning and analysis"
+    - "Complex software architecture"
+    - "Multi-step problem solving"
+    - "Technical writing and documentation"
+    - "Code review and optimization"
+    - "Research methodology"
+    - "Systems thinking"
+  
+  # Areas where it's competent but not expert
+  competent_areas:
+    - "Creative writing"
+    - "Basic data analysis"
+    - "General knowledge questions"
+    - "Simple coding tasks"
+  
+  # Areas where external tools/models might be better
+  delegate_areas:
+    - "Real-time data processing"
+    - "Image/video analysis"
+    - "Specialized scientific calculations"
+    - "Current events and news"
+
+prompt_templates:
+  # Pre-defined templates for complex use cases
+  strategic_analysis:
+    template: |
+      Conduct a strategic analysis of: {topic}
+      
+      Please provide:
+      1. Current situation assessment
+      2. Key stakeholders and their interests
+      3. SWOT analysis (Strengths, Weaknesses, Opportunities, Threats)
+      4. Strategic options and recommendations
+      5. Implementation considerations
+      6. Success metrics and KPIs
+      
+      Use structured thinking and provide detailed reasoning for each section.
+  
+  technical_architecture:
+    template: |
+      Design a technical architecture for: {system_description}
+      
+      Requirements: {requirements}
+      
+      Please include:
+      1. High-level system overview
+      2. Component breakdown and responsibilities
+      3. Data flow and integration points
+      4. Technology stack recommendations
+      5. Scalability and performance considerations
+      6. Security and reliability measures
+      7. Deployment and maintenance strategy
+  
+  complex_problem_solving:
+    template: |
+      Help me solve this complex problem: {problem_description}
+      
+      Context: {context}
+      Constraints: {constraints}
+      
+      Please approach this systematically:
+      1. Problem decomposition and analysis
+      2. Root cause identification
+      3. Solution alternatives evaluation
+      4. Recommended approach with rationale
+      5. Implementation roadmap
+      6. Risk assessment and mitigation
+      7. Success criteria and validation methods
+  
+  research_synthesis:
+    template: |
+      Research and synthesize information about: {research_topic}
+      
+      Focus areas: {focus_areas}
+      
+      Please provide:
+      1. Comprehensive overview of the topic
+      2. Key concepts and terminology
+      3. Current state of knowledge/practice
+      4. Major debates or controversies
+      5. Recent developments and trends
+      6. Practical applications and implications
+      7. Areas for further investigation
+
+advanced_features:
+  # Advanced capabilities specific to this model
+  multi_step_reasoning: true
+  context_synthesis: true
+  strategic_thinking: true
+  technical_depth: true
+  creative_problem_solving: true
+  
+  # Reasoning frameworks this model can apply
+  reasoning_frameworks:
+    - "First principles thinking"
+    - "Systems thinking"
+    - "Design thinking"
+    - "Scientific method"
+    - "Strategic planning frameworks"
+    - "Root cause analysis"
+    - "Decision trees"
+    - "Cost-benefit analysis"
+

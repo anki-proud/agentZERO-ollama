@@ -1,0 +1,121 @@
+model:
+  name: "smollm:135m"
+  display_name: "SmolLM 135M - Lightning Fast"
+  description: "Ultra-lightweight model optimized for speed and efficiency"
+  parameters: "135M"
+  size: "92MB"
+  context_window: 2048
+  max_tokens: 1024
+  
+  # Generation settings
+  default_temperature: 0.7
+  default_top_p: 0.9
+  default_top_k: 40
+  
+  # Performance characteristics
+  strengths:
+    - "Extremely fast response times (~200ms)"
+    - "Minimal memory usage (1GB RAM)"
+    - "Perfect for simple tasks"
+    - "Real-time interactions"
+    - "Quick iterations"
+  
+  weaknesses:
+    - "Limited reasoning capabilities"
+    - "Struggles with complex tasks"
+    - "Short context understanding"
+    - "Basic knowledge base"
+  
+  # Optimal use cases
+  use_cases:
+    - "Quick Q&A"
+    - "Simple text generation"
+    - "Basic summarization"
+    - "Fast prototyping"
+    - "Real-time chat responses"
+    - "Simple code snippets"
+    - "Basic translations"
+
+prompts:
+  system: |
+    You are a helpful AI assistant optimized for speed and efficiency. 
+    Provide clear, concise, and direct responses. 
+    Keep answers brief but informative.
+    If a task is too complex, suggest breaking it into smaller parts.
+  
+  optimization_rules:
+    - "Be concise and direct"
+    - "Avoid complex explanations"
+    - "Use simple language"
+    - "Focus on key points"
+    - "Suggest simpler alternatives for complex tasks"
+  
+  max_prompt_length: 200
+  recommended_prompt_style: "brief_and_direct"
+
+performance:
+  timeout: 15  # seconds
+  retry_attempts: 3
+  cache_enabled: true
+  cache_ttl: 300  # 5 minutes
+  
+  # Resource limits
+  max_concurrent_requests: 10
+  memory_limit: "1GB"
+  
+  # Quality settings
+  min_response_length: 10
+  max_response_length: 500
+  
+agent_config:
+  # Which agent roles this model is suitable for
+  suitable_roles:
+    - "quick_responder"
+    - "simple_processor"
+    - "chat_assistant"
+    - "basic_analyzer"
+  
+  # Agent-specific settings
+  planning_capability: "basic"
+  reasoning_capability: "simple"
+  creativity_level: "moderate"
+  factual_accuracy: "good"
+  
+  # Task routing
+  auto_route_to_larger_model:
+    - "complex_reasoning"
+    - "long_context_tasks"
+    - "detailed_analysis"
+    - "code_generation > 50 lines"
+
+monitoring:
+  # Performance metrics to track
+  track_metrics:
+    - "response_time"
+    - "token_throughput"
+    - "memory_usage"
+    - "success_rate"
+    - "user_satisfaction"
+  
+  # Alerts
+  alert_thresholds:
+    response_time_ms: 500
+    memory_usage_mb: 1200
+    error_rate_percent: 5
+
+examples:
+  # Example prompts that work well with this model
+  good_prompts:
+    - "What is Python?"
+    - "Explain REST APIs briefly"
+    - "Write a simple hello world function"
+    - "Summarize this paragraph in one sentence"
+    - "What's the weather like today?"
+  
+  # Prompts that should be routed to larger models
+  route_to_larger:
+    - "Explain quantum computing in detail with mathematical formulas"
+    - "Write a complete web application with authentication"
+    - "Analyze this 50-page research paper"
+    - "Create a comprehensive business plan"
+

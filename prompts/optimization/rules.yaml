@@ -1,0 +1,217 @@
+rules:
+  # General optimization rules
+  - name: "remove_redundancy"
+    pattern: '\b(\w+)\s+\1\b'
+    replacement: '\1'
+    description: "Remove repeated words"
+  
+  - name: "simplify_please"
+    pattern: '\bplease\s+'
+    replacement: ''
+    model_filter: ["smollm:135m"]
+    description: "Remove 'please' for faster models to save tokens"
+  
+  - name: "condense_whitespace"
+    pattern: '\s+'
+    replacement: ' '
+    description: "Condense multiple spaces to single space"
+  
+  - name: "remove_filler_words"
+    pattern: '\b(um|uh|like|you know|basically|actually)\s+'
+    replacement: ''
+    description: "Remove filler words that don't add meaning"
+  
+  # Model-specific optimizations
+  - name: "add_step_by_step_large"
+    pattern: '^(.+)$'
+    replacement: 'Think step by step. \1'
+    model_filter: ["smollm:1.7b"]
+    description: "Add step-by-step instruction for larger models"
+  
+  - name: "add_concise_instruction_small"
+    pattern: '^(.+)$'
+    replacement: 'Be concise. \1'
+    model_filter: ["smollm:135m"]
+    description: "Add concise instruction for smaller models"
+  
+  - name: "simplify_complex_sentences"
+    pattern: '\b(furthermore|moreover|additionally|consequently|nevertheless|nonetheless)\b'
+    replacement: 'Also'
+    model_filter: ["smollm:135m"]
+    description: "Simplify complex conjunctions for smaller models"
+  
+  # Task-specific optimizations
+  - name: "code_format_instruction"
+    pattern: '\b(write|create|generate)\s+(code|program|script|function)\b'
+    replacement: '\1 \2. Use proper formatting and comments.'
+    description: "Add formatting instruction for code generation"
+  
+  - name: "analysis_structure_instruction"
+    pattern: '\b(analyze|analysis|examine)\b'
+    replacement: '\1. Provide structured findings with clear conclusions.'
+    model_filter: ["smollm:360m", "smollm:1.7b"]
+    description: "Add structure instruction for analysis tasks"
+  
+  - name: "creative_originality_instruction"
+    pattern: '\b(write|create)\s+(story|poem|creative)\b'
+    replacement: '\1 original \2'
+    description: "Emphasize originality for creative tasks"
+  
+  # Length optimizations
+  - name: "remove_verbose_phrases"
+    pattern: '\b(in order to|for the purpose of|with the intention of)\b'
+    replacement: 'to'
+    description: "Replace verbose phrases with concise alternatives"
+  
+  - name: "simplify_questions"
+    pattern: '\bCould you please\b'
+    replacement: 'Please'
+    model_filter: ["smollm:135m", "smollm:360m"]
+    description: "Simplify polite questions"
+  
+  - name: "remove_unnecessary_qualifiers"
+    pattern: '\b(very|really|quite|rather|somewhat|fairly)\s+'
+    replacement: ''
+    model_filter: ["smollm:135m"]
+    description: "Remove unnecessary qualifiers for smaller models"
+  
+  # Clarity improvements
+  - name: "specify_output_format"
+    pattern: '\b(list|explain|describe)\b(?!\s+(in|as|using))'
+    replacement: '\1 clearly'
+    description: "Add clarity instruction for output requests"
+  
+  - name: "add_example_request"
+    pattern: '\b(show|demonstrate|illustrate)\b'
+    replacement: '\1 with examples'
+    model_filter: ["smollm:360m", "smollm:1.7b"]
+    description: "Request examples for better understanding"
+  
+  # Error prevention
+  - name: "prevent_hallucination"
+    pattern: '\b(fact|information|data)\b'
+    replacement: 'accurate \1'
+    description: "Emphasize accuracy to prevent hallucination"
+  
+  - name: "clarify_uncertainty"
+    pattern: '\b(if you don\'t know|if unsure)\b'
+    replacement: 'If uncertain, say so clearly.'
+    description: "Encourage honest uncertainty admission"
+  
+  # Performance optimizations
+  - name: "limit_response_length_small"
+    pattern: '$'
+    replacement: ' Keep response under 200 words.'
+    model_filter: ["smollm:135m"]
+    description: "Add length limit for smaller models"
+  
+  - name: "encourage_detail_large"
+    pattern: '$'
+    replacement: ' Provide comprehensive details.'
+    model_filter: ["smollm:1.7b"]
+    description: "Encourage detailed responses for larger models"
+  
+  # Context optimization
+  - name: "add_context_separator"
+    pattern: '\bContext:\s*(.+?)\s*(?=Question:|Task:|Request:)'
+    replacement: 'Context: \1\n\n'
+    description: "Improve context separation for clarity"
+  
+  - name: "prioritize_recent_context"
+    pattern: '\bPrevious conversation:\s*(.+?)(?=\n\n|\Z)'
+    replacement: 'Recent context (most important): \1'
+    description: "Emphasize recent context importance"
+
+# Optimization strategies by model
+model_strategies:
+  "smollm:135m":
+    focus: "speed_and_efficiency"
+    max_prompt_tokens: 150
+    optimizations:
+      - "remove_redundancy"
+      - "remove_filler_words"
+      - "simplify_complex_sentences"
+      - "remove_unnecessary_qualifiers"
+      - "limit_response_length_small"
+      - "add_concise_instruction_small"
+    
+  "smollm:360m":
+    focus: "balanced_performance"
+    max_prompt_tokens: 300
+    optimizations:
+      - "remove_redundancy"
+      - "condense_whitespace"
+      - "specify_output_format"
+      - "add_example_request"
+      - "prevent_hallucination"
+    
+  "smollm:1.7b":
+    focus: "comprehensive_quality"
+    max_prompt_tokens: 600
+    optimizations:
+      - "add_step_by_step_large"
+      - "analysis_structure_instruction"
+      - "add_example_request"
+      - "encourage_detail_large"
+      - "prevent_hallucination"
+
+# Quality metrics for optimization
+quality_metrics:
+  clarity:
+    weight: 0.3
+    indicators:
+      - "specific_instructions"
+      - "clear_expectations"
+      - "unambiguous_language"
+  
+  efficiency:
+    weight: 0.25
+    indicators:
+      - "token_count"
+      - "redundancy_removal"
+      - "concise_phrasing"
+  
+  effectiveness:
+    weight: 0.3
+    indicators:
+      - "task_specificity"
+      - "context_relevance"
+      - "output_guidance"
+  
+  compatibility:
+    weight: 0.15
+    indicators:
+      - "model_appropriateness"
+      - "complexity_matching"
+      - "capability_alignment"
+
+# Common prompt patterns and their optimizations
+patterns:
+  question_answering:
+    original: "Can you please tell me about {topic}?"
+    optimized:
+      "smollm:135m": "Explain {topic} briefly."
+      "smollm:360m": "Explain {topic} with key points and examples."
+      "smollm:1.7b": "Provide a comprehensive explanation of {topic} with detailed analysis and examples."
+  
+  code_generation:
+    original: "I need you to write some code that does {task}"
+    optimized:
+      "smollm:135m": "Write simple {language} code for {task}."
+      "smollm:360m": "Write well-documented {language} code for {task} with error handling."
+      "smollm:1.7b": "Design and implement robust {language} code for {task} with comprehensive documentation, error handling, and optimization considerations."
+  
+  analysis_request:
+    original: "Could you analyze this for me?"
+    optimized:
+      "smollm:135m": "Analyze this. List key points."
+      "smollm:360m": "Analyze this systematically. Provide structured findings and conclusions."
+      "smollm:1.7b": "Conduct thorough analysis. Provide detailed findings, implications, and strategic recommendations with supporting evidence."
+  
+  creative_writing:
+    original: "Write a story about {theme}"
+    optimized:
+      "smollm:135m": "Write a short story about {theme}. Keep it engaging."
+      "smollm:360m": "Write an original story about {theme} with clear plot and character development."
+      "smollm:1.7b": "Create a compelling, original story about {theme} with rich character development, engaging plot, and sophisticated narrative techniques."
+
